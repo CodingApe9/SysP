@@ -6,7 +6,7 @@
 
 report1.c : 16비트 16진수를 받아서 2진수 4, 3, 9자리 수로 나누어 print
 
-![image](https://user-images.githubusercontent.com/117576404/230012391-711b44c9-bd44-4894-b578-6fd807c64c11.png)
+![image](https://user-images.githubusercontent.com/117576404/230020087-f9d58268-8fce-4978-a40e-9e0e3c974b50.png)
 
 비트 단위 shift연산과 and연산을 이용함 (>>, &)
 
