@@ -2,7 +2,7 @@
 
 #과제1
 
-report1.c : 16진수 16비트를 받아서 2진수 4, 3, 9자리로 나누어 print
+report1.c : 16비트 16진수를 받아서 2진수 4, 3, 9자리 수로 나누어 print
 
 ![image](https://user-images.githubusercontent.com/117576404/230012391-711b44c9-bd44-4894-b578-6fd807c64c11.png)
 
