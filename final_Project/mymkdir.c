@@ -13,11 +13,12 @@ int main(int argc, char *argv[]) {
     char *owner = NULL;
     char *group = NULL;
     char *timestamp = NULL;
+    int pflag = 0;
 
     while ((opt = getopt(argc, argv, "pm:u:g:t:")) != -1) {
         switch (opt) {
             case 'p':
-                mode |= S_IRWXU | S_IRWXG | S_IRWXO;
+                pflag = 1;
                 break;
             case 'm':
                 mode = strtol(optarg, NULL, 8);
@@ -44,13 +45,20 @@ int main(int argc, char *argv[]) {
 
     char *directory = argv[optind];
 
-    if (mkdir(directory, mode) == -1) {
-        if (errno == EEXIST) {
-            fprintf(stderr, "Directory already exists: %s\n", directory);
-        } else {
+    if (pflag) {
+        if (mkdir(directory, mode) == -1 && errno != EEXIST) {
             perror("mkdir");
+            exit(EXIT_FAILURE);
         }
-        exit(EXIT_FAILURE);
+    } else {
+        if (mkdir(directory, mode) == -1) {
+            if (errno == EEXIST) {
+                fprintf(stderr, "Directory already exists: %s\n", directory);
+            } else {
+                perror("mkdir");
+            }
+            exit(EXIT_FAILURE);
+        }
     }
 
     if (owner != NULL || group != NULL) {
