@@ -13,6 +13,7 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
     }
 
     char buffer[BUFFER_SIZE];
+    int lineNums = 1
 
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         if (squeeze_blank && buffer[0] == '\n') {
@@ -20,7 +21,7 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
         }
 
         if (number_lines) {
-            printf("%6d  ", __LINE__);  // 라인 번호 출력
+            printf("%6d  ", lineNums++);  // 라인 번호 출력
         }
 
         for (int i = 0; buffer[i] != '\0'; i++) {
