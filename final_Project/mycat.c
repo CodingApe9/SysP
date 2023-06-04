@@ -25,17 +25,15 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
         }
 
         for (int i = 0; buffer[i] != '\0'; i++) {
-            if (show_tabs && buffer[i] == '\t') {
+            if (show_ends && buffer[strlen(buffer) - 1] == '\n') {
+                printf("$");
+            } else if (show_tabs && buffer[i] == '\t') {
                 printf("^I");
             } else if (show_nonprint && (buffer[i] < 32 || buffer[i] > 126)) {
                 printf("^%c", buffer[i] + 64);
             } else {
                 putchar(buffer[i]);
             }
-        }
-
-        if (show_ends && buffer[strlen(buffer) - 1] == '\n') {
-            printf("$");
         }
     }
 
