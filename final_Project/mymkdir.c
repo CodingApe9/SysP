@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <string.h>
+#include <errno.h>
 #include <utime.h>
 
 int main(int argc, char *argv[]) {
@@ -42,7 +45,11 @@ int main(int argc, char *argv[]) {
     char *directory = argv[optind];
 
     if (mkdir(directory, mode) == -1) {
-        perror("mkdir");
+        if (errno == EEXIST) {
+            fprintf(stderr, "Directory already exists: %s\n", directory);
+        } else {
+            perror("mkdir");
+        }
         exit(EXIT_FAILURE);
     }
 
