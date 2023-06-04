@@ -13,7 +13,7 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
     }
 
     char buffer[BUFFER_SIZE];
-    int lineNums = 1
+    int lineNums = 1;
 
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         if (squeeze_blank && buffer[0] == '\n') {
