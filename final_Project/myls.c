@@ -1,280 +1,111 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-#include <dirent.h>
-#include <stdbool.h>
-#include <pwd.h>
-#include <grp.h>
 #include <time.h>
+#include <unistd.h>
 
-#define DIRECTORY_SIZE MAXNAMLEN
+// 파일 및 디렉토리 정보를 저장하기 위한 구조체
+typedef struct {
+    char* name;
+    struct stat attributes;
+} File;
 
-void swap(struct stat* a, struct stat* b) {
-	struct stat tmp;
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+// 파일 비교를 위한 비교 함수
+int compare_files(const void* a, const void* b) {
+    return strcmp(((File*)a)->name, ((File*)b)->name);
 }
 
-void swapf(char* a, char* b) {
-	char* tmp = (char*)malloc(sizeof(char)*255);
-	strcpy(tmp, a);
-	strcpy(a, b);
-	strcpy(b, tmp);
-	free(tmp);
+// 시간 비교를 위한 비교 함수
+int compare_time(const void* a, const void* b) {
+    time_t time_a = ((File*)a)->attributes.st_mtime;
+    time_t time_b = ((File*)b)->attributes.st_mtime;
+    return difftime(time_a, time_b);
 }
 
-void sortStat(char** files, struct stat* stats, int* iopt, int n) {
-	for(int i = 0; i < n-1; i++) {
-		int tmp = i;
-		for(int j = i+1; j < n; j++) {
-			if(stats[tmp].st_mtime < stats[j].st_mtime) {
-				tmp = j;
-			}
-		}
-		if(i != tmp) {
-			swap(&stats[i], &stats[tmp]);
-			swapf(files[i], files[tmp]);
-			int itmp;
-			itmp = iopt[i];
-			iopt[i] = iopt[tmp];
-			iopt[tmp] = itmp;
-		}
-	}
-}
+int main(int argc, char* argv[]) {
+    int show_hidden = 0;
+    int sort_by_time = 0;
+    int reverse_order = 0;
 
-char fileType(mode_t m) {
-	if(S_ISREG(m))
-		return('-');
-	else if(S_ISDIR(m))
-		return ('d');
-	else if(S_ISCHR(m))
-		return ('c');
-	else if(S_ISBLK(m))
-		return ('b');
-	else if(S_ISLNK(m))
-		return ('l');
-	else if(S_ISFIFO(m))
-		return ('p');
-	else if(S_ISSOCK(m))
-		return ('s');
-}
+    // 명령행 인자를 분석하여 옵션을 설정
+    int opt;
+    while ((opt = getopt(argc, argv, "altr")) != -1) {
+        switch (opt) {
+            case 'a':
+                show_hidden = 1;
+                break;
+            case 'l':
+                // '-l' 옵션 추가 설정
+                break;
+            case 't':
+                sort_by_time = 1;
+                break;
+            case 'r':
+                reverse_order = 1;
+                break;
+            default:
+                fprintf(stderr, "잘못된 옵션: %c\n", opt);
+                return 1;
+        }
+    }
 
- char* perm(mode_t m) {
-	int i;
-	static char ret[10] = "---------";
-	for(i = 0; i < 3; i++) {
-		if(m & (S_IRUSR >> i*3))
-			ret[i*3] = 'r';
-		else
-			ret[i*3] = '-';
-		if(m & (S_IWUSR >> i*3))
-			ret[i*3+1] = 'w';
-		else
-			ret[i*3+1] = '-';
-		if(m & (S_IXUSR >> i*3))
-			ret[i*3+2] = 'x';
-		else
-			ret[i*3+2] = '-';
-	}
-	if(m & S_ISUID) {
-		if(m & S_IXUSR) 
-			ret[2] = 's';
-		else 
-			ret[2] = 'S';
-	}
-	if(m & S_ISGID) {
-		if(m & S_IXGRP) 
-			ret[5] = 's';
-		else 
-			ret[5] = 'S';
-	}
-	if(m & S_ISVTX) {
-		if(m & S_IXOTH)
-			ret[8] = 't';
-		else
-			ret[8] = 'T';
-	}
-	return (ret);
-}
+    struct dirent *de;
+    DIR *dir = opendir(".");
 
-void printStat(char** file, struct stat* stats, int* iopt, bool* opt, int n, int total) {
-	if(opt[1] == 1)
-		printf("total : %d\n", total/2);
-	for(int i = 0; i < n; i++) {
-		struct stat tmp = stats[i];
-		if(opt[0] == 1) {
-			printf("%7d ", iopt[i]);
-		}
-		if(opt[1] == 1) {
-			printf("%c%s ", fileType(tmp.st_mode), perm(tmp.st_mode));
-			printf("%3ld ", tmp.st_nlink);
-			printf("%s %s ", getpwuid(tmp.st_uid)->pw_name, getgrgid(tmp.st_gid)->gr_name);
-			printf("%9ld ", tmp.st_size);
-			printf("%.12s ", ctime(&tmp.st_mtime)+4);
-		}
-		if(fileType(tmp.st_mode) == 'l') {
-			char symfile[255] = {0};
-			readlink(file[i], symfile, 255);
-			printf("%s -> %s\n", file[i], symfile);
-		}
-		else {
-			printf("%s\n", file[i]);
-		}
-	}
-}
+    if (dir == NULL) {
+        printf("현재 디렉토리를 열 수 없습니다.\n");
+        return 1;
+    }
 
-void ls(char* pathname, bool* opt) {
-	struct dirent* entry;
-	DIR* dirp;
-	char filename[1024];
-	struct stat stats[1024];
-	char* files[1024];
-	int iopt[1024];
-	struct stat statbuf;
-	int idx = 0;
-	int total = 0;
-	if((dirp = opendir(pathname)) == NULL || chdir(pathname) == -1) {
-		fprintf(stderr, "opendir or chdir error | path : %s", pathname);
-		exit(1);
-	}
-	while((entry = readdir(dirp)) != NULL) {
-		if(entry->d_ino == 0) continue;
-		strcpy(filename, entry->d_name);
-		if(filename[0] == '.') continue;
-		if(lstat(filename, &statbuf) == -1) {
-			fprintf(stderr, "stat error\n");
-			exit(1);
-		}
-		total += statbuf.st_blocks;
-		files[idx] = (char*)malloc(sizeof(char)*255);
-		strcpy(files[idx], filename);
-		stats[idx] = statbuf;
-		iopt[idx] = entry->d_ino;
-		idx++;
-	}
-	if(opt[2] == 1) {
-		sortStat(files, stats, iopt, idx);
-	}
-	printStat(files, stats, iopt, opt, idx, total);
-	closedir(dirp);
-}
+    // 현재 디렉토리의 파일과 폴더를 읽어옴
+    File* files = NULL;
+    int num_files = 0;
+    while ((de = readdir(dir)) != NULL) {
+        // -a 옵션을 사용하지 않을 경우 숨김 파일은 무시
+        if (!show_hidden && de->d_name[0] == '.') {
+            continue;
+        }
 
-void ls2(char* filename, bool* opt) {
-	struct stat statbuf;
-	char* pathname;
-	pathname = malloc(1024);
-	DIR* dirp;
-	struct dirent* entry;
-	int ino;
-	bool sym = false;
-	if(lstat(filename, &statbuf) == -1) {
-		fprintf(stderr, "stat error\n");
-		exit(1);
-	}
-	if(fileType(statbuf.st_mode) == 'd') {
-		ls(filename, opt);
-	}
-	else {
-		if(fileType(statbuf.st_mode) == 'l') {
-			sym = true;
-		}
-		if(opt[0] == 1) {
-			if(getcwd(pathname, 1024) == NULL) {
-				fprintf(stderr, "getcwd error\n");
-				exit(1);
-			}
-			if((dirp = opendir(pathname)) == NULL) {
-				fprintf(stderr, "opendir error | path : %s", pathname);
-				exit(1);
-			}
-			while((entry = readdir(dirp)) != NULL) {
-				if(entry->d_ino == 0) continue;
-				if(strcmp(entry->d_name, filename) == 0) {
-					ino = entry->d_ino;
-					break;
-				}
-			}
-			printf("%d ", ino);
-			closedir(dirp);
-		}
-		if(opt[1] == 1) {
-			printf("%c%s ", fileType(statbuf.st_mode), perm(statbuf.st_mode));
-			printf("%ld ", statbuf.st_nlink);
-			printf("%s %s ", getpwuid(statbuf.st_uid)->pw_name, getgrgid(statbuf.st_gid)->gr_name);
-			printf("%ld ", statbuf.st_size);
-			printf("%.12s ", ctime(&statbuf.st_mtime) +4);
-		}
-		if(sym) {
-			char symfile[255] = {0};
-			readlink(filename, symfile, 255);
-			printf("%s -> %s\n", filename, symfile);
-		}
-		else {
-			printf("%s\n", filename);
-		}
-	}
-}
+        // 파일 정보를 읽어옴
+        File file;
+        file.name = de->d_name;
+        stat(file.name, &file.attributes);
 
-int main(int argc, char** argv) {
-	/*if(argc  3) {
-		fprintf(stderr, "usage : %s [-ilt]: [file_name or directory_name]", argv[0]);
-		exit(1);
-	}*/
-	char* pathname;
-	pathname = malloc(1024);
-	bool opt[3] = {0};
-	struct stat statbuf;
-	
-	if(argc == 1) {
-		if(getcwd(pathname, 1024) == NULL) {
-			fprintf(stderr, "getcwd error\n");
-			exit(1);
-		}
-		ls(pathname, opt);
+        // 배열에 파일 정보 추가
+        files = realloc(files, (num_files + 1) * sizeof(File));
+        files[num_files] = file;
+        num_files++;
+    }
 
-	}
-	else if(argc == 2) {
-		if(argv[1][0] == '-') {
-			for(int i = 1; i < strlen(argv[1]); i++) {
-				char tmp = argv[1][i];
-				if(tmp == 'i') opt[0] = 1;
-				else if(tmp == 'l') opt[1] = 1;
-				else if(tmp == 't') opt[2] = 1;
-			}
-		
-			if(getcwd(pathname, 1024) == NULL) {
-				fprintf(stderr, "getcwd error\n");
-				exit(1);
-			}
-			ls(pathname, opt);
-		}
-		else {
-			ls2(argv[1], opt);
-		}
-	}
-	else {
-		if(argv[1][0] == '-') {
-			for(int i = 1; i < strlen(argv[1]); i++) {
-				char tmp = argv[1][i];
-				if(tmp == 'i') opt[0] = 1;
-				else if(tmp == 'l') opt[1] = 1;
-				else if(tmp == 't') opt[2] = 1;
-			}
-			for(int i = 2; i < argc; i++) {
-				pathname = argv[i];
-				ls2(pathname, opt);
-			}
-		}
-		else {
-			for(int i = 1; i < argc; i++) {
-				ls2(argv[i], opt);
-			}
-		}
-	}
-	return 0;
+    closedir(dir);
+
+    // 파일 목록 정렬
+    qsort(files, num_files, sizeof(File), compare_files);
+
+    // -t 옵션 사용 시 파일 목록을 수정된 시간으로 정렬
+    if (sort_by_time) {
+        qsort(files, num_files, sizeof(File), compare_time);
+    }
+
+    // -r 옵션 사용 시 파일 목록을 역순으로 정렬
+    if (reverse_order) {
+        File* temp = malloc(num_files * sizeof(File));
+        for (int i = 0; i < num_files; i++) {
+            temp[i] = files[num_files - i - 1];
+        }
+        free(files);
+        files = temp;
+    }
+
+    // 파일 목록 출력
+    for (int i = 0; i < num_files; i++) {
+        printf("%s\n", files[i].name);
+    }
+
+    // 동적 할당한 메모리 해제
+    free(files);
+
+    return 0;
 }
