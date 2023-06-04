@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     int show_tabs = 0;
 
     int opt;
-    while ((opt = getopt(argc, argv, "nbset")) != -1) {
+    while ((opt = getopt(argc, argv, "nbsET")) != -1) {
         switch (opt) {
             case 'n':
                 show_line_numbers = 1;
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
                 show_tabs = 1;
                 break;
             default:
-                fprintf(stderr, "Usage: cat [-n] [-b] [-s] [-e] [-t] [file ...]\n");
+                fprintf(stderr, "Usage: cat [-n] [-b] [-s] [-E] [-T] [file ...]\n");
                 return 1;
         }
     }
