@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
+#include <string.h>
 
 #define BUFFER_SIZE 4096
 
-void display_file(const char* filename, int number_lines, int show_ends, int squeeze_blank, int show_tabs) {
+void display_file(const char* filename, int number_lines, int show_ends, int show_tabs, int show_nonprint, int squeeze_blank) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         perror("fopen");
@@ -13,29 +13,21 @@ void display_file(const char* filename, int number_lines, int show_ends, int squ
     }
 
     char buffer[BUFFER_SIZE];
-    int line_number = 1;
-    int blank_line_count = 0;
-    int prev_blank = 0;
-    int prev_newline = 0;
 
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         if (squeeze_blank && buffer[0] == '\n') {
-            if (prev_blank) {
-                continue;
-            } else {
-                prev_blank = 1;
-            }
-        } else {
-            prev_blank = 0;
+            continue;
         }
 
         if (number_lines) {
-            printf("%6d  ", line_number);
+            printf("%6d  ", __LINE__);  // 라인 번호 출력
         }
 
         for (int i = 0; buffer[i] != '\0'; i++) {
             if (show_tabs && buffer[i] == '\t') {
                 printf("^I");
+            } else if (show_nonprint && (buffer[i] < 32 || buffer[i] > 126)) {
+                printf("^%c", buffer[i] + 64);
             } else {
                 putchar(buffer[i]);
             }
@@ -44,8 +36,6 @@ void display_file(const char* filename, int number_lines, int show_ends, int squ
         if (show_ends && buffer[strlen(buffer) - 1] != '\n') {
             printf("$");
         }
-
-        line_number++;
     }
 
     fclose(file);
@@ -54,45 +44,45 @@ void display_file(const char* filename, int number_lines, int show_ends, int squ
 int main(int argc, char* argv[]) {
     int number_lines = 0;
     int show_ends = 0;
-    int squeeze_blank = 0;
     int show_tabs = 0;
+    int show_nonprint = 0;
+    int squeeze_blank = 0;
 
     int opt;
-    while ((opt = getopt(argc, argv, "nsetT")) != -1) {
+    while ((opt = getopt(argc, argv, "nbsETv")) != -1) {
         switch (opt) {
             case 'n':
                 number_lines = 1;
                 break;
+            case 'b':
+                number_lines = 1;
+                squeeze_blank = 1;
+                break;
+            case 'E':
+                show_ends = 1;
+                break;
+            case 'T':
+                show_tabs = 1;
+                break;
+            case 'v':
+                show_nonprint = 1;
+                break;
             case 's':
                 squeeze_blank = 1;
                 break;
-            case 'e':
-                show_ends = 1;
-                break;
-            case 't':
-                show_tabs = 1;
-                break;
-            case 'T':
-                show_tabs = 0;
-                break;
             default:
-                fprintf(stderr, "Usage: cat [-n] [-s] [-e] [-t|-T] [file...]\n");
+                fprintf(stderr, "Invalid option: -%c\n", optopt);
                 return 1;
         }
     }
 
-    if (optind == argc) {
-        // No files specified, read from stdin
-        char buffer[BUFFER_SIZE];
-        while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
-            printf("%s", buffer);
-        }
-    } else {
-        // Read files
-        for (int i = optind; i < argc; i++) {
-            display_file(argv[i], number_lines, show_ends, squeeze_blank, show_tabs);
-        }
+    if (optind >= argc) {
+        fprintf(stderr, "Usage: %s [options] <file>\n", argv[0]);
+        return 1;
     }
+
+    const char* filename = argv[optind];
+    display_file(filename, number_lines, show_ends, show_tabs, show_nonprint, squeeze_blank);
 
     return 0;
 }
