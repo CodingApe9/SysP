@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 
 // 파일 및 디렉토리 정보를 저장하기 위한 구조체
 typedef struct {
