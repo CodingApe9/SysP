@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <utime.h>
+#include <time.h>
 
 int main(int argc, char *argv[]) {
     int opt;
