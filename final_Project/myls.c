@@ -5,7 +5,10 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include <pwd.h>
+#include <grp.h>
 #include <string.h>
+
 
 // 파일 및 디렉토리 정보를 저장하기 위한 구조체
 typedef struct {
@@ -25,10 +28,29 @@ int compare_time(const void* a, const void* b) {
     return difftime(time_a, time_b);
 }
 
+// 파일 모드를 문자열로 변환하여 반환
+const char* get_permissions(mode_t mode) {
+    static char permissions[10];
+
+    permissions[0] = (S_ISDIR(mode)) ? 'd' : '-';
+    permissions[1] = (mode & S_IRUSR) ? 'r' : '-';
+    permissions[2] = (mode & S_IWUSR) ? 'w' : '-';
+    permissions[3] = (mode & S_IXUSR) ? 'x' : '-';
+    permissions[4] = (mode & S_IRGRP) ? 'r' : '-';
+    permissions[5] = (mode & S_IWGRP) ? 'w' : '-';
+    permissions[6] = (mode & S_IXGRP) ? 'x' : '-';
+    permissions[7] = (mode & S_IROTH) ? 'r' : '-';
+    permissions[8] = (mode & S_IWOTH) ? 'w' : '-';
+    permissions[9] = (mode & S_IXOTH) ? 'x' : '-';
+
+    return permissions;
+}
+
 int main(int argc, char* argv[]) {
     int show_hidden = 0;
     int sort_by_time = 0;
     int reverse_order = 0;
+    int show_details = 0;
 
     // 명령행 인자를 분석하여 옵션을 설정
     int opt;
@@ -38,7 +60,7 @@ int main(int argc, char* argv[]) {
                 show_hidden = 1;
                 break;
             case 'l':
-                // '-l' 옵션 추가 설정
+                show_details = 1;
                 break;
             case 't':
                 sort_by_time = 1;
@@ -102,7 +124,17 @@ int main(int argc, char* argv[]) {
 
     // 파일 목록 출력
     for (int i = 0; i < num_files; i++) {
-        printf("%s\n", files[i].name);
+        if (show_details) {
+            struct passwd *pwd = getpwuid(files[i].attributes.st_uid);
+            struct group *grp = getgrgid(files[i].attributes.st_gid);
+            char timestamp[20];
+            strftime(timestamp, sizeof(timestamp), "%b %e %H:%M", localtime(&(files[i].attributes.st_mtime)));
+            printf("%s %2lu %s %s %8lld %s %s\n", get_permissions(files[i].attributes.st_mode),
+                   files[i].attributes.st_nlink, pwd->pw_name, grp->gr_name,
+                   (long long)files[i].attributes.st_size, timestamp, files[i].name);
+        } else {
+            printf("%s\n", files[i].name);
+        }
     }
 
     // 동적 할당한 메모리 해제
