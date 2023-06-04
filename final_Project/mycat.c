@@ -34,7 +34,7 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
             }
         }
 
-        if (show_ends && buffer[strlen(buffer) - 1] != '\n') {
+        if (show_ends && buffer[strlen(buffer) - 1] == '\n') {
             printf("$");
         }
     }
