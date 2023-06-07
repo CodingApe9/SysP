@@ -25,6 +25,20 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/6f03f062-f398-434c-8b11-cb80950cf552)
 
 
+-T 옵션: '\t'(탭)을 "^I"로 대체하여 출력.
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/c0fa2ff1-c020-4785-885e-0365d768c933)
+
+
+-s 옵션: 연속적인 빈줄을 하나로 압축하여 출력.
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/508dd49f-b09a-4f89-b430-e3afd580118e)
+
+
+-v 옵션: 
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/71a5eca4-8096-401c-89d0-1810421b230e)
+
 
 ---
 
