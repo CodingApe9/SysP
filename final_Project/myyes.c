@@ -3,12 +3,17 @@
 int main(int argc, char *argv[]) {
     char *message = "y";
     
-    if (argc > 1){
-        *message = argv[1];
+    if (argc > 1){;
+        while (1){
+            for (int i=1; i<argc; i++){
+                printf("%s\n", argv[i]);
+            }
+        }
     }
-
-    while (1) {
+    else {
+        while (1) {
         printf("%s\n", message);
+    }
     }
 
     return 0;
