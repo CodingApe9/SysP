@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
     char *name = argv[1];
@@ -10,7 +11,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    for (int i=idx+1; i<str(name); i++){
+    for (int i=idx+1; i<strlen(name); i++){
         printf("%c", name[i]);
     }
 
