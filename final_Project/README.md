@@ -68,5 +68,101 @@ echo $? :전 명령어의 종료 상태를 확인.
 
 ---
 
-# yes: 이 명령어는 무한히 "yes" 또는 인자로 받은 문자열을 반복해서 출력.
+# yes: 무한히 "y" 또는 인자로 받은 문자열을 반복해서 출력. (1점)
 
+![image](https://github.com/CodingApe9/SysP/assets/117576404/962fdbee-f89a-4c97-a016-e9b5b3acfd0f)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/7c71e9b0-6c9e-4ce2-8568-0c89a44d5a0b)
+
+---
+
+# head: 파일의 앞부분을 출력하거나 표준 입력으로부터 데이터를 읽어 앞부분을 출력. (4점)
+head명령어와 (-n, -c, -q) 3가지 옵션 구현 
+
+기본 명령어: stdin
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/6ccc06f7-2053-4474-b77b-a84987b8b869)
+
+기본 명령어: 단일 파일 입력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/0d06bfdf-f853-4fd6-817b-630d1525225f)
+
+기본 명령어: 여러 파일 입력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/164f08bf-5e7f-4135-b0dd-907bdee1107b)
+
+-n 옵션: 줄 단위 개수 지정 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/14b3800c-b3ef-4e6c-b141-30306736a2f2)
+
+-c 옵션: 바이트 단위 크기 지정 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/ac872a8f-d1ed-48a8-82b9-a55972c0b0e8)
+
+-q 옵션: 파일 이름을 출력하지 않고 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/9c3fb30a-252b-4f01-bbf4-ef8b39b32539)
+
+--이런 것도 가능
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/09797d16-feb8-4fb8-9e86-3ea283a6c992)
+
+---
+
+# tail: 파일의 뒷부분을 출력. (4점)
+tail명령어와 (-n, -c, -q) 3가지 옵션 구현 
+
+기본 명령어
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/c909c43f-b4b2-4d32-b88e-9a7748c4a1a0)
+
+-n 옵션: 줄 단위 개수 지정 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/b830887a-3d3d-42f3-826c-c99771078daa)
+
+-c 옵션: 바이트 단위 크기 지정 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/e5be49c1-83fd-49a8-8673-986c55887b1d)
+
+-q 옵션: 파일 이름을 출력하지 않고 출력
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/6ccdfcf0-9b29-4e09-ba6a-e5e31e2e4ade)
+
+---
+
+# rev: 파일이나 입력 스트림의 각 줄을 역순으로 뒤집어서 출력 (1점)
+
+stdin
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/0ef3188f-089f-4983-befa-48783fc58106)
+
+파일
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/e10e7de2-5bf5-458a-95f9-75208953e57e)
+
+---
+
+# nl: 파일이나 입력 스트림의 각 줄에 번호를 부여하여 출력 (5점)
+nl명령어와 (-w, -s, -v, -i) 4가지 옵션 구현 
+
+기본 명령어: stdin
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/6b3cdb50-a654-4794-8882-c5be3e1cab5f)
+
+기본 명령어: 파일
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/5782f503-a389-45b0-9f1c-8352d4cc77c7)
+
+-w: 줄 번호의 출력 너비 지정
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/c5d53516-bbdd-41ea-b432-6fc1416f5ab0)
+
+-s: 번호를 건너뛰는 간격 지정
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/d35ae560-f64a-4b1c-acda-c7ea1e86a95a)
+
+-v: 시작 번호 설정.
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/a311d0af-eb12-4a2a-a5aa-118d0fe3829d)
+
+-i: 
