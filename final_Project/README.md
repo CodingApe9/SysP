@@ -37,8 +37,8 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 
 -v 옵션: 
 
-![image](https://github.com/CodingApe9/SysP/assets/117576404/71a5eca4-8096-401c-89d0-1810421b230e)
-
+![image](https://github.com/CodingApe9/SysP/assets/117576404/e276190a-223d-45b9-adb0-02b214fa92a6)
+![image](https://github.com/CodingApe9/SysP/assets/117576404/7d917fe4-d629-47c0-af47-e70cec823235)
 
 ---
 
