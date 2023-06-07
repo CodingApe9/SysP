@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    char *message = "yes";
+    char *message = "y";
     
     if (argc > 1){
-        char *message = argv[1];
+        *message = argv[1];
     }
 
     while (1) {
