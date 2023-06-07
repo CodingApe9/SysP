@@ -14,6 +14,6 @@ int main(int argc, char *argv[]) {
     for (int i=idx+1; i<strlen(name); i++){
         printf("%c", name[i]);
     }
-
+    printf("\n");
     return 0;
 }
