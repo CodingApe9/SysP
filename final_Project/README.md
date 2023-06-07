@@ -159,10 +159,14 @@ nl명령어와 (-w, -s, -v, -i) 4가지 옵션 구현
 
 -s: 번호를 건너뛰는 간격 지정
 
-![image](https://github.com/CodingApe9/SysP/assets/117576404/d35ae560-f64a-4b1c-acda-c7ea1e86a95a)
+![image](https://github.com/CodingApe9/SysP/assets/117576404/c94e1f94-4856-4ea6-8c03-647c88a6140d)
 
 -v: 시작 번호 설정.
 
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/a311d0af-eb12-4a2a-a5aa-118d0fe3829d)
 
--i: 
+-i: 번호의 증가치 설정.
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/b74c0579-515e-49b9-95ab-b8e95da16721)
+
+---
