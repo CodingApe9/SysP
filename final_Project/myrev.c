@@ -4,9 +4,9 @@
 
 // 문자열을 뒤집는 함수
 void reverse(char *str) {
-    unsigned int length = strlen(str-1);
+    unsigned int length = strlen(str);
     unsigned int i, j;
-    for (i = 0, j = length - 1; i < j; i++, j--) {
+    for (i = 0, j = length - 2; i < j; i++, j--) {
         char temp = str[i];
         str[i] = str[j];
         str[j] = temp;
