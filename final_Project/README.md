@@ -54,4 +54,19 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 
 ---
 
-# 
+# false: 1을 반환하는 명령어 (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/b370bba4-0db4-4fff-aea1-e2c0f52f4683)
+
+echo $? :전 명령어의 종료 상태를 확인.
+
+---
+
+# true: 0을 반환하는 명령어 (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/53452334-af1e-4672-826a-bf2e82142d16)
+
+---
+
+# yes: 이 명령어는 무한히 "yes" 또는 인자로 받은 문자열을 반복해서 출력.
+
