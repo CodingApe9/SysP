@@ -16,6 +16,14 @@ int main(int argc, char *argv[]) {
             printf("%c", name[i]);
         }
     }
+    else if (idx==strlen(name)-1){
+        name[strlen(name)-1] = '\0';
+        for (int i=0; i<strlen(name); i++){
+        if (name[i]=='/'){
+            idx = i;
+        }
+    }
+    }
     else {
         for (int i=idx+1; i<strlen(name); i++){
             printf("%c", name[i]);
