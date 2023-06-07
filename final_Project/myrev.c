@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
             if (line[read - 1] == '\n') {
                 line[read - 1] = '\0';
             }
-            if (strlen(line)==0){
+            if (strlen(line)==1 && line[0]=="\0"){
                 printf("\n");
                 continue;
             }
