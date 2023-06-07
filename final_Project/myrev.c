@@ -6,7 +6,7 @@
 void reverse(char *str) {
     unsigned int length = strlen(str);
     unsigned int i, j;
-    for (i = 0, j = length - 2; i < j; i++, j--) {
+    for (i = 0, j = length - 1; i < j; i++, j--) {
         char temp = str[i];
         str[i] = str[j];
         str[j] = temp;
@@ -27,16 +27,22 @@ int main(int argc, char *argv[]) {
         }
 
         while ((read = getline(&line, &line_length, file)) != -1) {
-        reverse(line);
-        printf("%s\n", line);
-    }
+            if (line[read - 1] == '\n') {
+                line[read - 1] = '\0';
+            }
+            reverse(line);
+            printf("%s\n", line);
+        }
     }
     // 표준 입력에서 각 줄을 읽어서 뒤집어 출력
     else {
         while ((read = getline(&line, &line_length, stdin)) != -1) {
-        reverse(line);
-        printf("%s", line);
-    }
+            if (line[read - 1] == '\n') {
+                line[read - 1] = '\0';
+            }
+            reverse(line);
+            printf("%s", line);
+        }
     }
     
     free(line);
