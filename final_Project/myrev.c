@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
         while ((read = getline(&line, &line_length, file)) != -1) {
             if (line[read - 1] == '\n') {
-                line[read - 1] = '\0';
+                line[read - 1] = '';
             }
             reverse(line);
             printf("%s\n", line);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     else {
         while ((read = getline(&line, &line_length, stdin)) != -1) {
             if (line[read - 1] == '\n') {
-                line[read - 1] = '\0';
+                line[read - 1] = '';
             }
             reverse(line);
             printf("%s", line);
