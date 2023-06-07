@@ -10,13 +10,19 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/76ca99e1-9eeb-49f0-b258-5bca3fdf2366)
 
 
--n 옵션: 
+-n 옵션: 각 줄에 라인넘버 표시
 
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/11ca82e5-1a99-4994-b67b-f6aaa2a5f98e)
 
 
--b옵션
+-b 옵션: -n과 동일 하지만 빈 줄에는 표시x
 
+![image](https://github.com/CodingApe9/SysP/assets/117576404/c83a9887-6499-431d-979f-f19ddee0f70b)
+
+
+-E 옵션: 각 줄의 끝에 $를 추가함.
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/6f03f062-f398-434c-8b11-cb80950cf552)
 
 
 
