@@ -5,7 +5,12 @@
 # cat
 cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현 
 
-cat명령어 + 옵션 6개 = 7
+기본 명령어
+![image](https://github.com/CodingApe9/SysP/assets/117576404/76ca99e1-9eeb-49f0-b258-5bca3fdf2366)
+
+
+
+
 
 ---
 
