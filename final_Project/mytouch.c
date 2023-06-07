@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
     struct utimbuf times;
     if (use_access_time || use_change_time || use_modification_time) {
-        if (utime(file, NULL) == -1) {
+        if (utime(file, &times) == -1) {
             perror("utime");
             exit(EXIT_FAILURE);
         }
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
         times.actime = time(NULL);
     }
     if (use_change_time) {
-        times.chtime = time(NULL);
+        times.modtime = time(NULL);
     }
     if (use_modification_time) {
         times.modtime = time(NULL);
