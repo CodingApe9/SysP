@@ -30,6 +30,9 @@ int main(int argc, char *argv[]) {
             if (line[read - 1] == '\n') {
                 line[read - 1] = '\0';
             }
+            if (strlen(str)==0){
+                continue
+            }
             reverse(line);
             printf("%s\n", line);
         }
