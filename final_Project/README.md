@@ -2,7 +2,7 @@
 
 2020875024 배수훈
 
-# cat
+# cat: 파일의 내용을 터미널에 출력 (7점)
 cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현 
 
 기본 명령어
@@ -42,7 +42,16 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 
 ---
 
-# touch
-touch명령어와 (-a, -c, -m, -d, -r, -t, -h, -p) 8가지 옵션 구현 
+# basename: 경로에서 파일 이름만 추출하는 명령어 (1점)
 
-touch명령어 + 옵션 8개 = 9
+![image](https://github.com/CodingApe9/SysP/assets/117576404/729ce659-990c-4b30-aa6c-d8a90da7f279)
+
+---
+
+# date: 시스템의 현재 날짜와 시간을 표시하는 명령어. (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/8ca84320-8ea8-469a-a305-225aa438bcb6)
+
+---
+
+# 
