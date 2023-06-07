@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
         }
 
         while ((read = getline(&line, &line_length, file)) != -1) {
-            if (read > 1 && line[read - 1] == '\n') {
+            if (read >= 1 && line[read - 1] == '\n') {
                 line[read - 1] = '\0';
             }
             reverse(line);
