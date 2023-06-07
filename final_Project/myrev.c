@@ -18,8 +18,15 @@ int main(int argc, char *argv[]) {
     unsigned int line_length = 0;
     int read;
 
+    FILE *file;
     if (argc>1){
-        while ((read = getline(&line, &line_length, argv[1])) != -1) {
+        file = fopen("example.txt", "r");
+        if (file == NULL) {
+            perror("파일 열기 실패");
+            exit(EXIT_FAILURE);
+        }
+
+        while ((read = getline(&line, &line_length, file)) != -1) {
         reverse(line);
         printf("%s", line);
     }
