@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 문자열을 뒤집는 함수
 void reverse(char *str) {
     unsigned int length = strlen(str);
     unsigned int i, j;
@@ -31,13 +30,13 @@ int main(int argc, char *argv[]) {
                 line[read - 1] = '\0';
             }
             if (strlen(line)==0){
-                continue
+                printf("\n");
+                continue;
             }
             reverse(line);
             printf("%s\n", line);
         }
     }
-    // 표준 입력에서 각 줄을 읽어서 뒤집어 출력
     else {
         while ((read = getline(&line, &line_length, stdin)) != -1) {
             if (line[read - 1] == '\n') {
