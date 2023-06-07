@@ -18,9 +18,9 @@ int main(int argc, char *argv[]) {
     unsigned int line_length = 0;
     int read;
 
-    FILE *file;
     if (argc>1){
-        file = fopen("example.txt", "r");
+        FILE *file;
+        file = fopen(argv[1], "r");
         if (file == NULL) {
             perror("파일 열기 실패");
             exit(EXIT_FAILURE);
