@@ -35,7 +35,7 @@ cat명령어와 (-n, -b, -E, -T, -s, -v) 6가지 옵션 구현
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/508dd49f-b09a-4f89-b430-e3afd580118e)
 
 
--v 옵션: 
+-v 옵션: 특수 문자를 확장된 형식으로 표시. (+64)
 
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/e276190a-223d-45b9-adb0-02b214fa92a6)
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/7d917fe4-d629-47c0-af47-e70cec823235)
