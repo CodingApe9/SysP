@@ -193,3 +193,8 @@ nl명령어와 (-w, -s, -v, -i) 4가지 옵션 구현
 
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/852f7bfe-2c75-4c5f-b22e-d1b97545cf94)
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/93245072-2e74-4bf1-96f8-ad441739aec1)
+
+---
+---
+
+총 30
