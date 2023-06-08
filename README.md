@@ -1,6 +1,10 @@
-# SysP
+# SysP: 시스템 프로그래밍
 
 2020875024 배수훈
+
+final_Project: 리눅스 명령어 구현 기말 프로젝트
+
+report1
 
 report로 시작하는 디렉토리는 과제
 
