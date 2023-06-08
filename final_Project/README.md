@@ -170,3 +170,16 @@ nl명령어와 (-w, -s, -v, -i) 4가지 옵션 구현
 ![image](https://github.com/CodingApe9/SysP/assets/117576404/b74c0579-515e-49b9-95ab-b8e95da16721)
 
 ---
+
+#pwd: 현재 작업중인 디렉토리 출력. (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/17266414-3854-4e4c-ae6e-967ae9aff688)
+
+---
+
+#clear: 터미널 화면을 지우는 명령어. (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/f2c9b909-e055-4408-991a-6bfe91fc966a)
+
+---
+
