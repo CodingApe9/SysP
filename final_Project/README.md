@@ -183,3 +183,13 @@ nl명령어와 (-w, -s, -v, -i) 4가지 옵션 구현
 
 ---
 
+#echo: 명령어는 주어진 텍스트를 터미널에 출력하는 명령어. (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/8dc43e20-e810-42b4-8e13-3a83a64b1f79)
+
+---
+
+#env: 현재 환경 변수(environment variables)를 터미널에 출력하는 명령어. (1점)
+
+![image](https://github.com/CodingApe9/SysP/assets/117576404/852f7bfe-2c75-4c5f-b22e-d1b97545cf94)
+![image](https://github.com/CodingApe9/SysP/assets/117576404/93245072-2e74-4bf1-96f8-ad441739aec1)
