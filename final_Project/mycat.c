@@ -30,7 +30,7 @@ void display_file(const char* filename, int number_lines, int show_ends, int sho
         }
 
         firstNL = 1; //개행이 아닌 다른 줄이 나오는 순간 다시 on (-s옵션)
-		 
+		
         if (number_lines) {//라인 넘버를 표시해야 하는 옵션이면 
             printf("%6d  ", lineNums++);  // 라인 번호 출력
         }
